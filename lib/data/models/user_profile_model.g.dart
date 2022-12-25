@@ -18,8 +18,6 @@ _$_UserProfileModel _$$_UserProfileModelFromJson(Map<String, dynamic> json) =>
       city: json['city'] as String,
       state: json['state'] as String,
       country: json['country'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
     );
 
 Map<String, dynamic> _$$_UserProfileModelToJson(_$_UserProfileModel instance) =>
@@ -34,6 +32,4 @@ Map<String, dynamic> _$$_UserProfileModelToJson(_$_UserProfileModel instance) =>
       'city': instance.city,
       'state': instance.state,
       'country': instance.country,
-      'created_at': instance.createdAt.toIso8601String(),
-      'updated_at': instance.updatedAt.toIso8601String(),
     };

@@ -31,10 +31,6 @@ mixin _$UserProfileModel {
   String get city => throw _privateConstructorUsedError;
   String get state => throw _privateConstructorUsedError;
   String get country => throw _privateConstructorUsedError;
-  @JsonKey(name: "created_at")
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: "updated_at")
-  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -58,9 +54,7 @@ abstract class $UserProfileModelCopyWith<$Res> {
       String address,
       String city,
       String state,
-      String country,
-      @JsonKey(name: "created_at") DateTime createdAt,
-      @JsonKey(name: "updated_at") DateTime updatedAt});
+      String country});
 }
 
 /// @nodoc
@@ -86,8 +80,6 @@ class _$UserProfileModelCopyWithImpl<$Res, $Val extends UserProfileModel>
     Object? city = null,
     Object? state = null,
     Object? country = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -130,14 +122,6 @@ class _$UserProfileModelCopyWithImpl<$Res, $Val extends UserProfileModel>
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ) as $Val);
   }
 }
@@ -160,9 +144,7 @@ abstract class _$$_UserProfileModelCopyWith<$Res>
       String address,
       String city,
       String state,
-      String country,
-      @JsonKey(name: "created_at") DateTime createdAt,
-      @JsonKey(name: "updated_at") DateTime updatedAt});
+      String country});
 }
 
 /// @nodoc
@@ -186,8 +168,6 @@ class __$$_UserProfileModelCopyWithImpl<$Res>
     Object? city = null,
     Object? state = null,
     Object? country = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
   }) {
     return _then(_$_UserProfileModel(
       uid: null == uid
@@ -230,14 +210,6 @@ class __$$_UserProfileModelCopyWithImpl<$Res>
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ));
   }
 }
@@ -255,9 +227,7 @@ class _$_UserProfileModel extends _UserProfileModel {
       required this.address,
       required this.city,
       required this.state,
-      required this.country,
-      @JsonKey(name: "created_at") required this.createdAt,
-      @JsonKey(name: "updated_at") required this.updatedAt})
+      required this.country})
       : super._();
 
   factory _$_UserProfileModel.fromJson(Map<String, dynamic> json) =>
@@ -284,16 +254,10 @@ class _$_UserProfileModel extends _UserProfileModel {
   final String state;
   @override
   final String country;
-  @override
-  @JsonKey(name: "created_at")
-  final DateTime createdAt;
-  @override
-  @JsonKey(name: "updated_at")
-  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'UserProfileModel(uid: $uid, imageUrl: $imageUrl, role: $role, email: $email, name: $name, phone: $phone, address: $address, city: $city, state: $state, country: $country, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'UserProfileModel(uid: $uid, imageUrl: $imageUrl, role: $role, email: $email, name: $name, phone: $phone, address: $address, city: $city, state: $state, country: $country)';
   }
 
   @override
@@ -311,17 +275,13 @@ class _$_UserProfileModel extends _UserProfileModel {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.state, state) || other.state == state) &&
-            (identical(other.country, country) || other.country == country) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.country, country) || other.country == country));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, uid, imageUrl, role, email, name,
-      phone, address, city, state, country, createdAt, updatedAt);
+      phone, address, city, state, country);
 
   @JsonKey(ignore: true)
   @override
@@ -339,19 +299,16 @@ class _$_UserProfileModel extends _UserProfileModel {
 
 abstract class _UserProfileModel extends UserProfileModel {
   const factory _UserProfileModel(
-          {required final String uid,
-          @JsonKey(name: 'image_url') required final String imageUrl,
-          required final String role,
-          required final String email,
-          required final String name,
-          required final String phone,
-          required final String address,
-          required final String city,
-          required final String state,
-          required final String country,
-          @JsonKey(name: "created_at") required final DateTime createdAt,
-          @JsonKey(name: "updated_at") required final DateTime updatedAt}) =
-      _$_UserProfileModel;
+      {required final String uid,
+      @JsonKey(name: 'image_url') required final String imageUrl,
+      required final String role,
+      required final String email,
+      required final String name,
+      required final String phone,
+      required final String address,
+      required final String city,
+      required final String state,
+      required final String country}) = _$_UserProfileModel;
   const _UserProfileModel._() : super._();
 
   factory _UserProfileModel.fromJson(Map<String, dynamic> json) =
@@ -378,12 +335,6 @@ abstract class _UserProfileModel extends UserProfileModel {
   String get state;
   @override
   String get country;
-  @override
-  @JsonKey(name: "created_at")
-  DateTime get createdAt;
-  @override
-  @JsonKey(name: "updated_at")
-  DateTime get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$_UserProfileModelCopyWith<_$_UserProfileModel> get copyWith =>

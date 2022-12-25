@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:businessmates_admin/core/errors/image_upload_failure.dart';
 import 'package:businessmates_admin/core/errors/manage_course_lesson_failure.dart';
 import 'package:businessmates_admin/core/errors/manage_course_section_failure.dart';
+import 'package:businessmates_admin/core/errors/manage_profile_failure.dart';
 import 'package:businessmates_admin/data/models/course/course_lesson_model.dart';
 import 'package:businessmates_admin/data/models/course/course_model.dart';
 import 'package:businessmates_admin/core/errors/manage_course_failure.dart';
@@ -64,12 +65,12 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<AuthFailure, UserProfileModel>> getUserProfile(
+  Future<Either<ManageProfileFailure, UserProfileModel>> getUserProfile(
       {required String uid}) async {
     if (await networkInfo.isConnected) {
       return remoteDataSource.getUserProfile(uid: uid);
     } else {
-      return left(const AuthFailure.noInternetConnection());
+      return left(const ManageProfileFailure.noInternetConnection());
     }
   }
 
@@ -104,12 +105,12 @@ class RepositoryImpl implements Repository {
   }
 
   @override
-  Future<Either<AuthFailure, void>> updateUserProfile(
+  Future<Either<ManageProfileFailure, void>> updateUserProfile(
       {required UserProfileModel userProfile}) async {
     if (await networkInfo.isConnected) {
       return remoteDataSource.updateUserProfile(userProfile: userProfile);
     } else {
-      return left(const AuthFailure.noInternetConnection());
+      return left(const ManageProfileFailure.noInternetConnection());
     }
   }
 
@@ -266,8 +267,7 @@ class RepositoryImpl implements Repository {
   @override
   Stream<List<CourseSectionModel>> streamAllSectionsOfCourse(
       {required CourseModel courseModel}) async* {
-    yield* remoteDataSource.streamAllSectionsOfCourse(
-        courseModel: courseModel);
+    yield* remoteDataSource.streamAllSectionsOfCourse(courseModel: courseModel);
   }
 
   @override
@@ -335,6 +335,15 @@ class RepositoryImpl implements Repository {
           courseLessonModel: courseLessonModel);
     } else {
       return left(const ManageCourseLessonFailure.noInternetConnection());
+    }
+  }
+
+  @override
+  Stream<UserProfileModel> streamUserProfile({required String uid}) async* {
+    if (await networkInfo.isConnected) {
+      yield* remoteDataSource.streamUserProfile(uid: uid);
+    } else {
+      yield* const Stream.empty();
     }
   }
 }

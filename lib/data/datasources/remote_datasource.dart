@@ -7,6 +7,7 @@ import 'package:businessmates_admin/core/errors/manage_categories_failure.dart';
 import 'package:businessmates_admin/core/errors/manage_course_failure.dart';
 import 'package:businessmates_admin/core/errors/manage_course_lesson_failure.dart';
 import 'package:businessmates_admin/core/errors/manage_course_section_failure.dart';
+import 'package:businessmates_admin/core/errors/manage_profile_failure.dart';
 import 'package:businessmates_admin/data/models/course/course_lesson_model.dart';
 import 'package:businessmates_admin/data/models/course/course_model.dart';
 import 'package:businessmates_admin/data/models/course/course_section_model.dart';
@@ -45,10 +46,11 @@ abstract class RemoteDataSource {
 
   // profile sources
   // get user profile
-  Future<Either<AuthFailure, UserProfileModel>> getUserProfile(
+  Future<Either<ManageProfileFailure, UserProfileModel>> getUserProfile(
       {required String uid});
+  Stream<UserProfileModel> streamUserProfile({required String uid});
   // update user profile
-  Future<Either<AuthFailure, Unit>> updateUserProfile(
+  Future<Either<ManageProfileFailure, Unit>> updateUserProfile(
       {required UserProfileModel userProfile});
   // update user profile image
 
@@ -247,6 +249,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       // create user in cloud storage with role, name, email, phone, etc.
       await firestore.collection('users').doc(data.user!.uid).set(
         {
+          'uid': data.user!.uid,
           'email': email,
           'role': 'admin',
           'name': '',
@@ -319,7 +322,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<Either<AuthFailure, UserProfileModel>> getUserProfile(
+  Future<Either<ManageProfileFailure, UserProfileModel>> getUserProfile(
       {required String uid}) async {
     // get user profile from firestore
     UserProfileModel userData = UserProfileModel.empty();
@@ -338,18 +341,21 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       }
     } on FirebaseException catch (e) {
       if (e.code == 'user-not-found') {
-        return left(const AuthFailure.userNotFound(message: 'No user found'));
+        return left(
+            const ManageProfileFailure.notFound(message: 'No user found'));
       } else {
-        return left(const AuthFailure.serverError(message: 'Server error'));
+        return left(
+            const ManageProfileFailure.serverError(message: 'Server error'));
       }
     }
   }
 
   @override
-  Future<Either<AuthFailure, Unit>> updateUserProfile(
+  Future<Either<ManageProfileFailure, Unit>> updateUserProfile(
       {required UserProfileModel userProfile}) async {
     // update user profile in firestore
     try {
+      print(userProfile);
       await firestore.collection('users').doc(userProfile.uid).update({
         'name': userProfile.name,
         'phone': userProfile.phone,
@@ -357,14 +363,17 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         'city': userProfile.city,
         'state': userProfile.state,
         'country': userProfile.country,
+        'image_url': userProfile.imageUrl,
         'updated_at': DateTime.now(),
       });
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.code == 'user-not-found') {
-        return left(const AuthFailure.userNotFound(message: 'No user found'));
+        return left(
+            const ManageProfileFailure.notFound(message: 'No user found'));
       } else {
-        return left(const AuthFailure.serverError(message: 'Server error'));
+        return left(
+            const ManageProfileFailure.serverError(message: 'Server error'));
       }
     }
   }
@@ -881,6 +890,19 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         const ManageCourseLessonFailure.serverError(message: 'Server error'),
       );
     }
+  }
+
+  @override
+  Stream<UserProfileModel> streamUserProfile({required String uid}) async* {
+    final doc = firestore.collection('users').doc(uid).snapshots();
+
+    yield* doc.map((event) {
+      print(event.data());
+      final data = UserProfileModel.fromJson(event.data()!);
+      print(data);
+
+      return data;
+    });
   }
 
   //

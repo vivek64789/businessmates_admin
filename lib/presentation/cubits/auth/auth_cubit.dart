@@ -13,6 +13,7 @@ import 'package:injectable/injectable.dart';
 import '../../../core/errors/auth_failure.dart';
 import '../../../core/utils/cache_constants.dart';
 import '../../../data/models/auth_user_model.dart';
+import '../manage_categories/manage_categories_cubit.dart';
 
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';

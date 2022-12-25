@@ -4,6 +4,7 @@ import 'package:businessmates_admin/presentation/screens/authentication/login_sc
 import 'package:businessmates_admin/presentation/screens/authentication/register_screen.dart';
 import 'package:businessmates_admin/presentation/screens/authentication/verify_otp_screen.dart';
 import 'package:businessmates_admin/presentation/screens/homepage/home_screen.dart';
+import 'package:businessmates_admin/presentation/screens/homepage/update_profile_screen.dart';
 import 'package:businessmates_admin/presentation/screens/introduction_animation/introduction_animation_screen.dart';
 import 'package:businessmates_admin/presentation/screens/manage_categories/add_new_category_screen.dart';
 import 'package:businessmates_admin/presentation/screens/manage_categories/manage_categories_screen.dart';
@@ -95,6 +96,11 @@ import 'presentation/screens/homepage/course_info_screen.dart';
       page: CreateNewCourseLessonScreen,
       name: "CreateNewCourseLessonScreenRoute",
       path: CreateNewCourseLessonScreen.routeName,
+    ),
+    AutoRoute(
+      page: UpdateProfileScreen,
+      name: "UpdateProfileScreenRoute",
+      path: UpdateProfileScreen.routeName,
     ),
     AutoRoute(page: SplashScreen, initial: true),
   ],

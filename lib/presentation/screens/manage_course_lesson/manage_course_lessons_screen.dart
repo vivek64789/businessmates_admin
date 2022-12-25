@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:businessmates_admin/core/design/app_icons.dart';
+import 'package:businessmates_admin/core/utils/constants.dart';
 import 'package:businessmates_admin/data/models/course/course_lesson_model.dart';
 import 'package:businessmates_admin/data/models/course/course_model.dart';
 import 'package:businessmates_admin/data/models/course/course_section_model.dart';
@@ -60,7 +61,7 @@ class _ManageCourseLessonsScreenState extends State<ManageCourseLessonsScreen> {
                 leading: CircleAvatar(
                   backgroundImage: NetworkImage(
                     snapshot.data![index].imageUrl.isEmpty
-                        ? "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+                        ? Constants.placeholderImage
                         : snapshot.data![index].imageUrl,
                   ),
                 ),

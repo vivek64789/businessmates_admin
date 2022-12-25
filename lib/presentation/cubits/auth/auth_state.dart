@@ -1,6 +1,5 @@
 part of 'auth_cubit.dart';
 
-enum LoadingStatus { initial, loading, loaded, error }
 
 @freezed
 class AuthState with _$AuthState {

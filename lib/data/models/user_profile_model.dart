@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_profile_model.freezed.dart';
 part 'user_profile_model.g.dart';
 
-
 @freezed
 class UserProfileModel with _$UserProfileModel {
   const factory UserProfileModel({
@@ -17,13 +16,11 @@ class UserProfileModel with _$UserProfileModel {
     required String city,
     required String state,
     required String country,
-    @JsonKey(name: "created_at") required DateTime createdAt,
-    @JsonKey(name: "updated_at") required DateTime updatedAt,
   }) = _UserProfileModel;
 
   const UserProfileModel._();
 
-  factory UserProfileModel.empty() => UserProfileModel(
+  factory UserProfileModel.empty() => const UserProfileModel(
         uid: '',
         role: '',
         email: '',
@@ -34,8 +31,6 @@ class UserProfileModel with _$UserProfileModel {
         state: '',
         country: '',
         imageUrl: '',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
       );
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) =>

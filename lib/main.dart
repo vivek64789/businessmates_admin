@@ -12,6 +12,7 @@ import 'presentation/cubits/manage_categories/manage_categories_cubit.dart';
 import 'presentation/cubits/manage_course/manage_course_cubit.dart';
 import 'presentation/cubits/manage_course_lesson/manage_course_lesson_cubit.dart';
 import 'presentation/cubits/manage_course_section/manage_course_section_cubit.dart';
+import 'presentation/cubits/manage_profile/manage_profile_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,6 +57,10 @@ class MyApp extends StatelessWidget {
                   lazy: false,
                   create: (BuildContext context) =>
                       getIt<ManageCategoriesCubit>(),
+                ),
+                BlocProvider(
+                  lazy: false,
+                  create: (BuildContext context) => getIt<ManageProfileCubit>(),
                 ),
                 BlocProvider(
                   lazy: false,

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:businessmates_admin/core/errors/manage_course_failure.dart';
+import 'package:businessmates_admin/core/errors/manage_profile_failure.dart';
 import 'package:businessmates_admin/data/models/course/course_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,9 +31,10 @@ abstract class Repository {
       {required String email, required String password});
 
   // profile actions
-  Future<Either<AuthFailure, UserProfileModel>> getUserProfile(
+  Future<Either<ManageProfileFailure, UserProfileModel>> getUserProfile(
       {required String uid});
-  Future<Either<AuthFailure, void>> updateUserProfile(
+  Stream<UserProfileModel> streamUserProfile({required String uid});
+  Future<Either<ManageProfileFailure, void>> updateUserProfile(
       {required UserProfileModel userProfile});
   Future<Either<ImageUploadFailure, String>> uploadUserProfileImage(
       {required String uid, required File image});

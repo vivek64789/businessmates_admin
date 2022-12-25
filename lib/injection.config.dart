@@ -17,6 +17,8 @@ import 'package:businessmates_admin/presentation/cubits/manage_course_lesson/man
     as _i7;
 import 'package:businessmates_admin/presentation/cubits/manage_course_section/manage_course_section_cubit.dart'
     as _i8;
+import 'package:businessmates_admin/presentation/cubits/manage_profile/manage_profile_cubit.dart'
+    as _i9;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -42,6 +44,7 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i7.ManageCourseLessonCubit());
     gh.lazySingleton<_i8.ManageCourseSectionCubit>(
         () => _i8.ManageCourseSectionCubit());
+    gh.lazySingleton<_i9.ManageProfileCubit>(() => _i9.ManageProfileCubit());
     return this;
   }
 }

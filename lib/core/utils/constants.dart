@@ -35,4 +35,7 @@ class Constants {
   static const double formFieldMaxWidth = 200.0;
   static const double formFieldMaxHeight = 100.0;
   static const double formFieldBetweenSpacing = 10.0;
+
+  static const placeholderImage =
+      "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png";
 }
