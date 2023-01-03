@@ -17,6 +17,8 @@ class CourseLessonModel with _$CourseLessonModel {
     @JsonKey(name: "section_id") required String sectionId,
     @JsonKey(name: "course_id") required String courseId,
     @JsonKey(name: "category_id") required String categoryId,
+    @JsonKey(name: "document_url") required String documentUrl,
+
   }) = _CourseLessonModel;
 
   const CourseLessonModel._();
@@ -33,6 +35,7 @@ class CourseLessonModel with _$CourseLessonModel {
         isLocked: true,
         courseId: '',
         categoryId: '',
+        documentUrl: '',
       );
 
   factory CourseLessonModel.fromJson(Map<String, dynamic> json) =>

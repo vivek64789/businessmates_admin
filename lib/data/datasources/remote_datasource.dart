@@ -59,6 +59,8 @@ abstract class RemoteDataSource {
 
   Future<Either<ImageUploadFailure, String>> uploadSingleImage(
       {required File image});
+  Future<Either<ImageUploadFailure, String>> uploadSinglePdf(
+      {required File pdf});
 
   // course categories sources
   // create course categories
@@ -903,6 +905,22 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
       return data;
     });
+  }
+
+  @override
+  Future<Either<ImageUploadFailure, String>> uploadSinglePdf(
+      {required File pdf}) async {
+    try {
+      final ref =
+          firebaseStorage.ref().child('pdfs/${pdf.path.split('/').last}');
+      final uploadTask = ref.putFile(pdf);
+      final snapshot = await uploadTask;
+      final downloadUrl = await snapshot.ref.getDownloadURL();
+      return right(downloadUrl);
+    } catch (e) {
+      return left(
+          const ImageUploadFailure.serverError(message: 'Server error'));
+    }
   }
 
   //

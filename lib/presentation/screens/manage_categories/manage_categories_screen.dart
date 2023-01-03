@@ -67,7 +67,7 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
                 ),
                 subtitle: Text(snapshot.data![index].description),
                 trailing: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.23,
+                  // width: MediaQuery.of(context).size.width * 0.25,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

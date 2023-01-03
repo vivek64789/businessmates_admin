@@ -346,4 +346,13 @@ class RepositoryImpl implements Repository {
       yield* const Stream.empty();
     }
   }
+  
+  @override
+  Future<Either<ImageUploadFailure, String>> uploadSinglePdf({required File pdf}) async {
+    if (await networkInfo.isConnected) {
+      return remoteDataSource.uploadSinglePdf(pdf: pdf);
+    } else {
+      return left(const ImageUploadFailure.noInternetConnection());
+    }
+  }
 }

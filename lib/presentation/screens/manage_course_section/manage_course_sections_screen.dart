@@ -75,7 +75,7 @@ class _ManageCourseSectionsScreenState
                 ),
                 subtitle: Text(snapshot.data![index].shortDescription),
                 trailing: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.23,
+                  // width: MediaQuery.of(context).size.width * 0.23,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

@@ -47,6 +47,8 @@ class _CreateNewCourseLessonScreenState
       TextEditingController();
   final TextEditingController _lessonImageUrlController =
       TextEditingController();
+  final TextEditingController _lessonDocumentUrlController =
+      TextEditingController();
   final TextEditingController _lessonDurationController =
       TextEditingController();
 
@@ -71,10 +73,26 @@ class _CreateNewCourseLessonScreenState
       _lessonVideoUrlController.text = widget.lesson!.videoUrl;
       _lessonImageUrlController.text = widget.lesson!.imageUrl;
       _lessonDurationController.text = widget.lesson!.duration.toString();
+      _lessonDocumentUrlController.text = widget.lesson!.documentUrl;
     } else {
       manageCourseLessonCubit.setCourseLessonModel(CourseLessonModel.empty());
     }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _sectionNameController.dispose();
+    _lessonNameController.dispose();
+    _lessonShortDescriptionController.dispose();
+    _lessonDescriptionController.dispose();
+    _lessonVideoUrlController.dispose();
+    _lessonImageUrlController.dispose();
+    _lessonDocumentUrlController.dispose();
+    _lessonDurationController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -226,6 +244,26 @@ class _CreateNewCourseLessonScreenState
                         const SizedBox(
                           height: 10,
                         ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextButton.icon(
+                            icon: Icon(Icons.file_copy,
+                                color: Theme.of(context).colorScheme.onPrimary),
+                            label: Text('Upload Lesson PDF (Optional)',
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                )),
+                            onPressed: () async {
+                              final url =
+                                  await imageCubit.showPdfUploadSheet(context);
+                              _lessonImageUrlController.text = url;
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: BMTextFormField(
@@ -367,6 +405,8 @@ class _CreateNewCourseLessonScreenState
                                             _lessonDescriptionController.text,
                                         duration:
                                             _lessonDurationController.text,
+                                        documentUrl:
+                                            _lessonDocumentUrlController.text,
                                       ),
                                     );
                                   } else {
@@ -387,7 +427,10 @@ class _CreateNewCourseLessonScreenState
                                         duration:
                                             _lessonDurationController.text,
                                         shortDescription:
-                                            _lessonDescriptionController.text,
+                                            _lessonShortDescriptionController
+                                                .text,
+                                        documentUrl:
+                                            _lessonDocumentUrlController.text,
                                       ),
                                     );
                                   }

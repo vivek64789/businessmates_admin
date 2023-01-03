@@ -1,38 +1,54 @@
 import 'package:businessmates_admin/core/helpers/my_toast.dart';
 import 'package:businessmates_admin/core/utils/validation_helper.dart';
 import 'package:businessmates_admin/data/models/course_categories_model.dart';
-import 'package:businessmates_admin/presentation/cubits/image_cubit/image_cubit.dart';
 import 'package:businessmates_admin/presentation/cubits/manage_categories/manage_categories_cubit.dart';
 import 'package:businessmates_admin/presentation/widgets/bm_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../cubits/image_cubit/image_cubit.dart';
 import '../../widgets/bm_button.dart';
 
-class CreateNewCategoryScreen extends StatelessWidget {
+class CreateNewCategoryScreen extends StatefulWidget {
   static const String routeName = '/create_new_category';
-  CreateNewCategoryScreen({super.key, this.category});
+  const CreateNewCategoryScreen({super.key, this.category});
   final CategoriesModel? category;
 
+  @override
+  State<CreateNewCategoryScreen> createState() =>
+      _CreateNewCategoryScreenState();
+}
+
+class _CreateNewCategoryScreenState extends State<CreateNewCategoryScreen> {
   // form key
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-// text controllers
 
+// text controllers
   final TextEditingController _categoryNameController = TextEditingController();
+
   final TextEditingController _categoryDescriptionController =
       TextEditingController();
+
   final TextEditingController _categoryImageController =
       TextEditingController();
 
+  late final ManageCategoriesCubit manageCategoriesCubit;
+
+  late final ImageCubit imageCubit;
+
+  @override
+  void initState() {
+    manageCategoriesCubit = context.read<ManageCategoriesCubit>();
+
+    imageCubit = context.read<ImageCubit>();
+    _categoryDescriptionController.text = widget.category?.description ?? '';
+    _categoryNameController.text = widget.category?.name ?? '';
+    _categoryImageController.text = widget.category?.imageUrl ?? '';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    ManageCategoriesCubit manageCategoriesCubit =
-        context.read<ManageCategoriesCubit>();
-
-    ImageCubit imageCubit = context.read<ImageCubit>();
-    _categoryDescriptionController.text = category?.description ?? '';
-    _categoryNameController.text = category?.name ?? '';
-    _categoryImageController.text = category?.imageUrl ?? '';
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -125,7 +141,7 @@ class CreateNewCategoryScreen extends StatelessWidget {
                           Navigator.of(context).pop();
                           myToast(
                             context: context,
-                            widget: Text(category != null
+                            widget: Text(widget.category != null
                                 ? "Category Updated Successfully"
                                 : 'Category Created Successfully'),
                           );
@@ -158,7 +174,7 @@ class CreateNewCategoryScreen extends StatelessWidget {
                         return BMButton(
                           isLoading: state.manageCategoriesLoadingStatus ==
                               LoadingStatus.loading,
-                          text: category != null
+                          text: widget.category != null
                               ? 'Update Category'
                               : 'Create Category',
                           color: Theme.of(context).colorScheme.onPrimary,
@@ -169,9 +185,9 @@ class CreateNewCategoryScreen extends StatelessWidget {
                             if (_formKey.currentState!.validate() &&
                                 _categoryImageController.text.isNotEmpty) {
                               // if the form is valid
-                              if (category != null) {
+                              if (widget.category != null) {
                                 manageCategoriesCubit.updateCourseCategory(
-                                  categoriesModel: category!.copyWith(
+                                  categoriesModel: widget.category!.copyWith(
                                     description:
                                         _categoryDescriptionController.text,
                                     imageUrl: _categoryImageController.text,

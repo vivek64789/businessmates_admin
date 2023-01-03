@@ -57,6 +57,8 @@ abstract class Repository {
 
   Future<Either<ImageUploadFailure, String>> uploadSingleImage(
       {required File image});
+  Future<Either<ImageUploadFailure, String>> uploadSinglePdf(
+      {required File pdf});
 
   Future<Either<ManageCategoriesFailure, List<CategoriesModel>>>
       getAllCourseCategories();
