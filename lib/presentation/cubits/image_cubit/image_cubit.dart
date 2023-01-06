@@ -100,12 +100,12 @@ class ImageCubit extends Cubit<ImageState> {
 
   // use case to upload pdf
   Future<String> uploadPdf() async {
-    if (_localImage == null) {
+    if (_localPdf == null) {
       return "";
     }
     emit(state.copyWith(status: Status.loading));
     var imageEither = await _repository.uploadSinglePdf(
-      pdf: _localImage!,
+      pdf: _localPdf!,
     );
     imageEither.fold(
       (failure) => emit(
@@ -116,11 +116,11 @@ class ImageCubit extends Cubit<ImageState> {
       ),
       (success) async {
         emit(state.copyWith(
-          uploadedImage: success,
+          uploadedPdf: success,
           status: Status.success,
         ));
       },
     );
-    return state.uploadedImage;
+    return state.uploadedPdf;
   }
 }

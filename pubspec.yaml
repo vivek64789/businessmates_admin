@@ -62,6 +62,7 @@ dependencies:
   image_picker: ^0.8.6
   shimmer: ^2.0.0
   file_picker: ^5.2.4
+  flutter_pdfview: ^1.2.5
 
 dev_dependencies:
   flutter_test:

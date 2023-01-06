@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 import '../cubits/image_cubit/image_cubit.dart';
 import 'bm_button.dart';
@@ -18,8 +19,8 @@ class PDFUploadBottomSheet extends StatefulWidget {
 }
 
 class _PDFUploadBottomSheetState extends State<PDFUploadBottomSheet> {
-  File? _image; //?
-  double? _imagePreviewRadius = 0;
+  File? _pdf; //?
+  double? _pdfPreviewRadius = 0;
   double? _previewBorderOpacity = 0;
   bool isNotChanged = true;
   bool isPickerInit = true;
@@ -34,7 +35,10 @@ class _PDFUploadBottomSheetState extends State<PDFUploadBottomSheet> {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      // File file = Fi le(result.files.single.path);
+      File file = File(result.files.single.path.toString());
+      setState(() {
+        _pdf = file;
+      });
     } else {
       // User canceled the picker
     }
@@ -42,27 +46,27 @@ class _PDFUploadBottomSheetState extends State<PDFUploadBottomSheet> {
 
   //method to open image from camera
 
-  List<Widget> previewImages() {
-    List<Widget> images = [];
-    if (_image == null) {
-      return images;
+  List<Widget> previewPdfs() {
+    List<Widget> pdfs = [];
+    if (_pdf == null) {
+      return pdfs;
     }
-    context.read<ImageCubit>().localImageChanged(_image!);
-    images.add(
+    context.read<ImageCubit>().localPDFChanged(_pdf!);
+    pdfs.add(
       Image.file(
-        _image!,
+        _pdf!,
         // height: 200,
         // width: 200,
       ),
     );
     Future.delayed(const Duration(milliseconds: 1000), () {
       setState(() {
-        _imagePreviewRadius = 100;
+        _pdfPreviewRadius = 100;
         _previewBorderOpacity = 1;
       });
     });
 
-    return images;
+    return pdfs;
   }
 
   @override
@@ -112,7 +116,7 @@ class _PDFUploadBottomSheetState extends State<PDFUploadBottomSheet> {
                 const SizedBox(
                   height: 20,
                 ),
-                previewImages().isNotEmpty
+                previewPdfs().isNotEmpty
                     ? GestureDetector(
                         onLongPress: () {
                           showDialog(
@@ -130,7 +134,7 @@ class _PDFUploadBottomSheetState extends State<PDFUploadBottomSheet> {
                                   child: const Text('Delete'),
                                   onPressed: () {
                                     setState(() {
-                                      _image = null;
+                                      _pdf = null;
                                     });
                                     Navigator.pop(context);
                                   },
@@ -141,21 +145,42 @@ class _PDFUploadBottomSheetState extends State<PDFUploadBottomSheet> {
                           setState(() {});
                         },
                         child: AnimatedContainer(
-                          height: 200,
+                          height: 300,
                           duration: const Duration(milliseconds: 1000),
-                          child: CircleAvatar(
-                            radius: _imagePreviewRadius,
-                            backgroundColor: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(_previewBorderOpacity!),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: CircleAvatar(
-                                radius: _imagePreviewRadius,
-                                backgroundImage: FileImage(_image!),
-                              ),
-                            ),
+                          // preview pdf
+                          child: PDFView(
+                            filePath: _pdf!.path,
+                            enableSwipe: true,
+                            swipeHorizontal: true,
+                            autoSpacing: false,
+                            pageFling: false,
+                            pageSnap: true,
+                            defaultPage: 0,
+                            fitPolicy: FitPolicy.BOTH,
+                            preventLinkNavigation:
+                                false, // if set to true the link is handled in flutter
+                            onRender: (pages) {
+                              setState(() {
+                                // _pdfPreviewRadius = 100;
+                                // _previewBorderOpacity = 1;
+                              });
+                            },
+                            onError: (error) {
+                              print(error.toString());
+                            },
+                            onPageError: (page, error) {
+                              print('$page: ${error.toString()}');
+                            },
+                            onViewCreated:
+                                (PDFViewController pdfViewController) {
+                              // _controller.complete(pdfViewController);
+                            },
+                            onPageChanged: (int? page, int? total) {
+                              print('page change: $page/$total');
+                            },
+                            onLinkHandler: (String? uri) {
+                              print('goto uri: $uri');
+                            },
                           ),
                         ),
                       )
@@ -163,7 +188,7 @@ class _PDFUploadBottomSheetState extends State<PDFUploadBottomSheet> {
                 const SizedBox(
                   height: 10,
                 ),
-                previewImages().isNotEmpty
+                previewPdfs().isNotEmpty
                     ? Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 4.0, horizontal: 8.0),
@@ -178,7 +203,7 @@ class _PDFUploadBottomSheetState extends State<PDFUploadBottomSheet> {
                                   text: "Confirm Upload",
                                   color: Theme.of(context).colorScheme.primary,
                                   onPressed: () async {
-                                    if (_image == null) {
+                                    if (_pdf == null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         const SnackBar(
@@ -189,9 +214,8 @@ class _PDFUploadBottomSheetState extends State<PDFUploadBottomSheet> {
                                       );
                                       return;
                                     }
-                                    final imageUrl =
-                                        await imageCubit.uploadImages();
-                                    widget.onPdfUploaded(imageUrl);
+                                    final pdfUrl = await imageCubit.uploadPdf();
+                                    widget.onPdfUploaded(pdfUrl);
                                   },
                                 );
                               },
