@@ -257,7 +257,8 @@ class _CreateNewCourseLessonScreenState
                             onPressed: () async {
                               final url =
                                   await imageCubit.showPdfUploadSheet(context);
-                              _lessonImageUrlController.text = url;
+                              print("url: $url");
+                              _lessonDocumentUrlController.text = url;
                             },
                           ),
                         ),

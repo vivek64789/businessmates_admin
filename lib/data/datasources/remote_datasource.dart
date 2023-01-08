@@ -796,6 +796,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         'is_locked': courseLessonModel.isLocked,
         'category_id': courseLessonModel.categoryId,
         'course_id': courseLessonModel.courseId,
+        'document_url': courseLessonModel.documentUrl,
         'created_at': DateTime.now(),
         'updated_at': DateTime.now(),
       });
@@ -883,6 +884,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         'is_locked': courseLessonModel.isLocked,
         'category_id': courseLessonModel.categoryId,
         'course_id': courseLessonModel.courseId,
+        'document_url': courseLessonModel.documentUrl,
         'updated_at': DateTime.now(),
       });
       // get the data from document reference and return
