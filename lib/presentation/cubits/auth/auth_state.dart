@@ -1,6 +1,5 @@
 part of 'auth_cubit.dart';
 
-
 @freezed
 class AuthState with _$AuthState {
   const factory AuthState({
@@ -16,6 +15,7 @@ class AuthState with _$AuthState {
     required bool isCodeSent,
     required LoadingStatus loginLoadingStatus,
     required LoadingStatus registerLoadingStatus,
+    required LoadingStatus sendResetPasswordLinkLoadingStatus,
     required LoadingStatus verifyOTPLoadingStatus,
   }) = _AuthState;
 
@@ -33,5 +33,6 @@ class AuthState with _$AuthState {
         loginLoadingStatus: LoadingStatus.initial,
         registerLoadingStatus: LoadingStatus.initial,
         verifyOTPLoadingStatus: LoadingStatus.initial,
+        sendResetPasswordLinkLoadingStatus: LoadingStatus.initial,
       );
 }

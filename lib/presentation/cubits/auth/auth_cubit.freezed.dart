@@ -29,6 +29,8 @@ mixin _$AuthState {
   bool get isCodeSent => throw _privateConstructorUsedError;
   LoadingStatus get loginLoadingStatus => throw _privateConstructorUsedError;
   LoadingStatus get registerLoadingStatus => throw _privateConstructorUsedError;
+  LoadingStatus get sendResetPasswordLinkLoadingStatus =>
+      throw _privateConstructorUsedError;
   LoadingStatus get verifyOTPLoadingStatus =>
       throw _privateConstructorUsedError;
 
@@ -55,6 +57,7 @@ abstract class $AuthStateCopyWith<$Res> {
       bool isCodeSent,
       LoadingStatus loginLoadingStatus,
       LoadingStatus registerLoadingStatus,
+      LoadingStatus sendResetPasswordLinkLoadingStatus,
       LoadingStatus verifyOTPLoadingStatus});
 
   $AuthUserModelCopyWith<$Res> get userModel;
@@ -85,6 +88,7 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
     Object? isCodeSent = null,
     Object? loginLoadingStatus = null,
     Object? registerLoadingStatus = null,
+    Object? sendResetPasswordLinkLoadingStatus = null,
     Object? verifyOTPLoadingStatus = null,
   }) {
     return _then(_value.copyWith(
@@ -136,6 +140,11 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
           ? _value.registerLoadingStatus
           : registerLoadingStatus // ignore: cast_nullable_to_non_nullable
               as LoadingStatus,
+      sendResetPasswordLinkLoadingStatus: null ==
+              sendResetPasswordLinkLoadingStatus
+          ? _value.sendResetPasswordLinkLoadingStatus
+          : sendResetPasswordLinkLoadingStatus // ignore: cast_nullable_to_non_nullable
+              as LoadingStatus,
       verifyOTPLoadingStatus: null == verifyOTPLoadingStatus
           ? _value.verifyOTPLoadingStatus
           : verifyOTPLoadingStatus // ignore: cast_nullable_to_non_nullable
@@ -172,6 +181,7 @@ abstract class _$$_AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
       bool isCodeSent,
       LoadingStatus loginLoadingStatus,
       LoadingStatus registerLoadingStatus,
+      LoadingStatus sendResetPasswordLinkLoadingStatus,
       LoadingStatus verifyOTPLoadingStatus});
 
   @override
@@ -201,6 +211,7 @@ class __$$_AuthStateCopyWithImpl<$Res>
     Object? isCodeSent = null,
     Object? loginLoadingStatus = null,
     Object? registerLoadingStatus = null,
+    Object? sendResetPasswordLinkLoadingStatus = null,
     Object? verifyOTPLoadingStatus = null,
   }) {
     return _then(_$_AuthState(
@@ -252,6 +263,11 @@ class __$$_AuthStateCopyWithImpl<$Res>
           ? _value.registerLoadingStatus
           : registerLoadingStatus // ignore: cast_nullable_to_non_nullable
               as LoadingStatus,
+      sendResetPasswordLinkLoadingStatus: null ==
+              sendResetPasswordLinkLoadingStatus
+          ? _value.sendResetPasswordLinkLoadingStatus
+          : sendResetPasswordLinkLoadingStatus // ignore: cast_nullable_to_non_nullable
+              as LoadingStatus,
       verifyOTPLoadingStatus: null == verifyOTPLoadingStatus
           ? _value.verifyOTPLoadingStatus
           : verifyOTPLoadingStatus // ignore: cast_nullable_to_non_nullable
@@ -276,6 +292,7 @@ class _$_AuthState implements _AuthState {
       required this.isCodeSent,
       required this.loginLoadingStatus,
       required this.registerLoadingStatus,
+      required this.sendResetPasswordLinkLoadingStatus,
       required this.verifyOTPLoadingStatus});
 
   @override
@@ -303,11 +320,13 @@ class _$_AuthState implements _AuthState {
   @override
   final LoadingStatus registerLoadingStatus;
   @override
+  final LoadingStatus sendResetPasswordLinkLoadingStatus;
+  @override
   final LoadingStatus verifyOTPLoadingStatus;
 
   @override
   String toString() {
-    return 'AuthState(isInProgress: $isInProgress, isAppFirstTime: $isAppFirstTime, isAppFirstTimeChecking: $isAppFirstTimeChecking, userModel: $userModel, isUserLoggedIn: $isUserLoggedIn, currentLoggedInUser: $currentLoggedInUser, emailCode: $emailCode, verificationIdOption: $verificationIdOption, failureMessageOption: $failureMessageOption, isCodeSent: $isCodeSent, loginLoadingStatus: $loginLoadingStatus, registerLoadingStatus: $registerLoadingStatus, verifyOTPLoadingStatus: $verifyOTPLoadingStatus)';
+    return 'AuthState(isInProgress: $isInProgress, isAppFirstTime: $isAppFirstTime, isAppFirstTimeChecking: $isAppFirstTimeChecking, userModel: $userModel, isUserLoggedIn: $isUserLoggedIn, currentLoggedInUser: $currentLoggedInUser, emailCode: $emailCode, verificationIdOption: $verificationIdOption, failureMessageOption: $failureMessageOption, isCodeSent: $isCodeSent, loginLoadingStatus: $loginLoadingStatus, registerLoadingStatus: $registerLoadingStatus, sendResetPasswordLinkLoadingStatus: $sendResetPasswordLinkLoadingStatus, verifyOTPLoadingStatus: $verifyOTPLoadingStatus)';
   }
 
   @override
@@ -339,6 +358,10 @@ class _$_AuthState implements _AuthState {
                 other.loginLoadingStatus == loginLoadingStatus) &&
             (identical(other.registerLoadingStatus, registerLoadingStatus) ||
                 other.registerLoadingStatus == registerLoadingStatus) &&
+            (identical(other.sendResetPasswordLinkLoadingStatus,
+                    sendResetPasswordLinkLoadingStatus) ||
+                other.sendResetPasswordLinkLoadingStatus ==
+                    sendResetPasswordLinkLoadingStatus) &&
             (identical(other.verifyOTPLoadingStatus, verifyOTPLoadingStatus) ||
                 other.verifyOTPLoadingStatus == verifyOTPLoadingStatus));
   }
@@ -358,6 +381,7 @@ class _$_AuthState implements _AuthState {
       isCodeSent,
       loginLoadingStatus,
       registerLoadingStatus,
+      sendResetPasswordLinkLoadingStatus,
       verifyOTPLoadingStatus);
 
   @JsonKey(ignore: true)
@@ -381,6 +405,7 @@ abstract class _AuthState implements AuthState {
       required final bool isCodeSent,
       required final LoadingStatus loginLoadingStatus,
       required final LoadingStatus registerLoadingStatus,
+      required final LoadingStatus sendResetPasswordLinkLoadingStatus,
       required final LoadingStatus verifyOTPLoadingStatus}) = _$_AuthState;
 
   @override
@@ -407,6 +432,8 @@ abstract class _AuthState implements AuthState {
   LoadingStatus get loginLoadingStatus;
   @override
   LoadingStatus get registerLoadingStatus;
+  @override
+  LoadingStatus get sendResetPasswordLinkLoadingStatus;
   @override
   LoadingStatus get verifyOTPLoadingStatus;
   @override

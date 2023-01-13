@@ -1,39 +1,31 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:businessmates_admin/core/design/app_icons.dart';
-import 'package:businessmates_admin/core/utils/validation_helper.dart';
-import 'package:businessmates_admin/presentation/cubits/auth/auth_cubit.dart';
-import 'package:businessmates_admin/presentation/screens/authentication/register_screen.dart';
-import 'package:businessmates_admin/presentation/screens/authentication/verify_otp_screen.dart';
-import 'package:businessmates_admin/presentation/widgets/bm_button.dart';
-import 'package:businessmates_admin/presentation/widgets/bm_text_form_field.dart';
-import 'package:businessmates_admin/routes.gr.dart';
+import '../../../core/design/app_icons.dart';
+import '../../../core/utils/validation_helper.dart';
+import '../../cubits/auth/auth_cubit.dart';
+import 'login_screen.dart';
+import 'register_screen.dart';
+import '../../widgets/bm_button.dart';
+import '../../widgets/bm_text_form_field.dart';
+import '../../../routes.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/design/size.dart';
 import '../../../core/utils/constants.dart';
 import '../../cubits/manage_categories/manage_categories_cubit.dart';
-import 'forgot_password_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-  static const routeName = '/login-screen';
-  static Page page() => const MaterialPage<void>(child: LoginScreen());
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
+  static const routeName = '/forgot-password-screen';
+  static Page page() => const MaterialPage<void>(child: ForgotPasswordScreen());
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   late AuthCubit _authCubit;
   // controllers
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool isHidden = true;
-
-  bool isHiddenConfirm = true;
-
-  bool isChecked = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -46,15 +38,15 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Center(
             child: Form(
               key: _formKey,
               child: Column(
                 children: [
                   Text(
-                    'Login to your account',
+                    'Forgot your password',
                     style: Theme.of(context).textTheme.headline3,
                     textAlign: TextAlign.left,
                   ),
@@ -62,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: Constants.formFieldBetweenSpacing,
                   ),
                   const LogoWidget(height: 150),
+
                   // Email form field
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -80,49 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: Constants.formFieldBetweenSpacing,
                   ),
                   // Password form field
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: Constants.formFieldMarginHorizontal),
-                    child: BMTextFormField(
-                      controller: _passwordController,
-                      hintText: 'Password',
-                      prefixIcon: const Icon(BMIcon.lock),
-                      validator: (value) {
-                        return isEmpty(value) ?? checkPassword(value);
-                      },
-                      obscureText: isHidden,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          isHidden ? BMIcon.eye : BMIcon.eye_slash,
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            isHidden = !isHidden;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: Constants.formFieldBetweenSpacing,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: paddingHorizontal),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              context.router.pushNamed(
-                                ForgotPasswordScreen.routeName,
-                              );
-                            },
-                            child: const Text('Forgot Password?')),
-                      ],
-                    ),
-                  ),
+
                   BlocConsumer<AuthCubit, AuthState>(
                     listener: (context, state) {
                       state.failureMessageOption.fold(
@@ -151,32 +102,29 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         },
                       );
-                      if (state.loginLoadingStatus == LoadingStatus.loaded &&
-                          state.currentLoggedInUser!.emailVerified == true) {
+                      if (state.sendResetPasswordLinkLoadingStatus ==
+                          LoadingStatus.loaded) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text("Reset link sent to your email!")));
                         context.router.replace(
-                          RootDashboardRoute(
-                            currentIndex: 0,
-                          ),
+                          const LoginScreenRoute(),
                         );
-                      } else if (state.loginLoadingStatus ==
-                              LoadingStatus.loaded &&
-                          state.currentLoggedInUser!.emailVerified == false) {
-                        context.router.replaceNamed(VerifyOTPScreen.routeName);
                       }
                     },
                     builder: (context, state) {
                       return BMButton(
-                          isLoading:
-                              state.loginLoadingStatus == LoadingStatus.loading,
+                          isLoading: state.sendResetPasswordLinkLoadingStatus ==
+                              LoadingStatus.loading,
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              _authCubit.signInWithEmailAndPassword(
+                              _authCubit.sendPasswordResetEmail(
                                 email: _emailController.text,
-                                password: _passwordController.text,
                               );
                             }
                           },
-                          text: "Login");
+                          text: "Send reset link");
                     },
                   ),
                   const SizedBox(
@@ -210,27 +158,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class LogoWidget extends StatelessWidget {
-  const LogoWidget({
-    Key? key,
-    required this.height,
-  }) : super(key: key);
-
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(paddingHorizontal),
-      height: height,
-      child: Image.asset(
-        Constants.logo,
-        fit: BoxFit.contain,
       ),
     );
   }

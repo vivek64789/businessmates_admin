@@ -9,7 +9,6 @@ import 'package:businessmates_admin/presentation/widgets/bm_text_form_field.dart
 import 'package:businessmates_admin/routes.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../core/utils/constants.dart';
 import '../../cubits/manage_categories/manage_categories_cubit.dart';
@@ -62,13 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(
                     height: Constants.formFieldBetweenSpacing,
                   ),
-                  SizedBox(
-                    height: 200,
-                    child: SvgPicture.asset(
-                      "assets/images/login.svg",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                  const LogoWidget(height: 150),
 
                   // Email form field
                   Container(

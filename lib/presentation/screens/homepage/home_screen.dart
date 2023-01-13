@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/theme/color.dart';
+import '../authentication/login_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -56,19 +57,14 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, state) {
-                  return Text(
-                    "Hello, ${state.currentLoggedInUser!.displayName ?? state.currentLoggedInUser!.email}",
-                    style: const TextStyle(
-                      color: labelColor,
-                      fontSize: 14,
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 5,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LogoWidget(height: MediaQuery.of(context).size.height * 0.06),
+                  const Text(
+                    "Business Mates",
+                  ),
+                ],
               ),
             ],
           )),
@@ -147,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   )),
             ),
-          )
+          ),
         ],
       ),
     );

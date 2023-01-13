@@ -148,7 +148,24 @@ class AuthCubit extends Cubit<AuthState> {
 
   // forgot password
   Future<void> sendPasswordResetEmail({required String email}) async {
-    await _repository.sendPasswordResetEmail(email: email);
+    emit(state.copyWith(
+      sendResetPasswordLinkLoadingStatus: LoadingStatus.loading,
+      failureMessageOption: none(),
+    ));
+    final value = await _repository.sendPasswordResetEmail(email: email);
+    value.fold(
+      (l) => emit(
+        state.copyWith(
+          failureMessageOption: some(l),
+          sendResetPasswordLinkLoadingStatus: LoadingStatus.error,
+        ),
+      ),
+      (r) => emit(
+        state.copyWith(
+          sendResetPasswordLinkLoadingStatus: LoadingStatus.loaded,
+        ),
+      ),
+    );
   }
 
   // change password

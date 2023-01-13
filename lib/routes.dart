@@ -1,5 +1,6 @@
 // ignore: depend_on_referenced_packages
 import 'package:auto_route/auto_route.dart';
+import 'package:businessmates_admin/presentation/screens/authentication/forgot_password_screen.dart';
 import 'package:businessmates_admin/presentation/screens/authentication/login_screen.dart';
 import 'package:businessmates_admin/presentation/screens/authentication/register_screen.dart';
 import 'package:businessmates_admin/presentation/screens/authentication/verify_otp_screen.dart';
@@ -101,6 +102,11 @@ import 'presentation/screens/homepage/course_info_screen.dart';
       page: UpdateProfileScreen,
       name: "UpdateProfileScreenRoute",
       path: UpdateProfileScreen.routeName,
+    ),
+    AutoRoute(
+      page: ForgotPasswordScreen,
+      name: "ForgotPasswordScreenRoute",
+      path: ForgotPasswordScreen.routeName,
     ),
     AutoRoute(page: SplashScreen, initial: true),
   ],
