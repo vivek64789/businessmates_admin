@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:businessmates_admin/core/design/app_icons.dart';
+import 'package:businessmates_admin/core/utils/constants.dart';
 import 'package:businessmates_admin/presentation/cubits/auth/auth_cubit.dart';
 import 'package:businessmates_admin/presentation/screens/manage_categories/manage_categories_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../core/theme/color.dart';
 import '../authentication/login_screen.dart';
@@ -60,7 +61,9 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  LogoWidget(height: MediaQuery.of(context).size.height * 0.06),
+                  LogoWidget(
+                      showTitle: false,
+                      height: MediaQuery.of(context).size.height * 0.06),
                   const Text(
                     "Business Mates",
                   ),
@@ -107,43 +110,45 @@ class _HomePageState extends State<HomePage> {
                 context.router.pushNamed(ManageCategoriesScreen.routeName);
               },
               child: Container(
-                  margin: const EdgeInsets.all(8),
-                  height: MediaQuery.of(context).size.height * 0.2,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.1),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset:
-                            const Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(
-                        BMIcon.check_circle,
-                        size: 40,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      Text("Manage Courses",
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall!
-                              .copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold)),
-                    ],
-                  )),
+                margin: const EdgeInsets.all(8),
+                height: MediaQuery.of(context).size.height * 0.2,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.1),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    // Icon(
+                    //   BMIcon.check_circle,
+                    //   size: 40,
+                    //   color: Theme.of(context).colorScheme.primary,
+                    // ),
+                    Lottie.network(Constants.bookLottieUrl),
+                    Text("Manage Courses",
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ),
             ),
           ),
+          Lottie.network(Constants.dashboardLottieUrl),
         ],
       ),
     );

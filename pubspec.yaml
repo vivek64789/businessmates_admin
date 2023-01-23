@@ -63,6 +63,7 @@ dependencies:
   shimmer: ^2.0.0
   file_picker: ^5.2.4
   flutter_pdfview: ^1.2.5
+  lottie: ^2.2.0
 
 dev_dependencies:
   flutter_test:

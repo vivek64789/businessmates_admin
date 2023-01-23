@@ -61,7 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: Constants.formFieldBetweenSpacing,
                   ),
-                  const LogoWidget(height: 150),
+                  const LogoWidget(
+                    height: 150,
+                  ),
                   // Email form field
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -218,19 +220,40 @@ class _LoginScreenState extends State<LoginScreen> {
 class LogoWidget extends StatelessWidget {
   const LogoWidget({
     Key? key,
+    this.showTitle = true,
     required this.height,
   }) : super(key: key);
 
   final double height;
+  final bool showTitle;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(paddingHorizontal),
-      height: height,
-      child: Image.asset(
-        Constants.logo,
-        fit: BoxFit.contain,
+      // height: height,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: height * 0.5,
+            child: Image.asset(
+              Constants.logo,
+              fit: BoxFit.contain,
+            ),
+          ),
+          showTitle
+              ? const SizedBox(
+                  width: 10,
+                )
+              : Container(),
+          showTitle
+              ? Text(
+                  Constants.appName,
+                  style: Theme.of(context).textTheme.labelLarge,
+                )
+              : Container(),
+        ],
       ),
     );
   }

@@ -163,12 +163,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           );
                         },
                       );
+                      print(state);
                       if (state.registerLoadingStatus == LoadingStatus.loaded &&
                           state.currentLoggedInUser!.emailVerified == true) {
                         context.router.replace(RootDashboardRoute(
                           currentIndex: 0,
                         ));
-                      } else if (state.loginLoadingStatus ==
+                      } else if (state.registerLoadingStatus ==
                               LoadingStatus.loaded &&
                           state.currentLoggedInUser!.emailVerified == false) {
                         context.router.replaceNamed(VerifyOTPScreen.routeName);

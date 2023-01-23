@@ -45,10 +45,10 @@ class _SplashScreenState extends State<SplashScreen> {
           return [LoginScreen.page()];
         } else if (authState.currentLoggedInUser != null &&
             authState.currentLoggedInUser!.uid.isNotEmpty &&
-            authState.currentLoggedInUser!.emailVerified) {
+            authState.currentLoggedInUser!.emailVerified == true) {
           return [RootDashboard.page()];
         } else if (authState.currentLoggedInUser!.uid.isNotEmpty &&
-            !authState.currentLoggedInUser!.emailVerified) {
+            authState.currentLoggedInUser!.emailVerified == false) {
           return [VerifyOTPScreen.page()];
         } else {
           return [LoginScreen.page()];

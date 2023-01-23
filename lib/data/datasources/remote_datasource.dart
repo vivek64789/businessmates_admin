@@ -264,6 +264,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
           'image_url': '',
           'created_at': DateTime.now(),
           'updated_at': DateTime.now(),
+          'is_subscribed': false,
         },
       );
 
